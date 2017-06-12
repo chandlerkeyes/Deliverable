@@ -1,0 +1,41 @@
+package com.company;
+import java.util.Scanner;
+
+public class CubedDigits {
+    public static void main(String[] args) {
+
+        Scanner keyboard = new Scanner(System.in);
+        //declare all variables
+        int userNum;
+        int sum = 0;
+        int input;
+        int output;
+
+        //prompt the user to input an integer
+        System.out.println("Enter any number");
+        userNum = keyboard.nextInt();
+        input = userNum;
+
+        //invoking cubedDigit method
+        output = cubedDigit(userNum);
+
+        // testing to see if the sum of the cubed digits is equal to the usesr's original input
+        if (output == input) {
+            System.out.println(true + ", the result is " + output);
+        }
+        else {
+            System.out.println(false + ", the result is " + output);
+        }
+    }
+    public static int cubedDigit(int userNum) {
+        int sum = 0;
+        int input = userNum;
+
+        while(userNum > 0){
+            int i = userNum % 10;
+            sum = sum + (i * i * i);
+            userNum = userNum / 10;
+        }
+        return sum;
+    }
+}
