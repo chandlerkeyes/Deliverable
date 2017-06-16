@@ -1,77 +1,55 @@
+
 package com.company;
+//importing all classes needed
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
-import java.util.Calendar;
 
 public class DateDiff {
     public static void main(String[] args) {
+        //asking the user to enter two dates and initializing my variables
         Scanner keyboard = new Scanner(System.in);
-        Calendar date1 = Calendar.getInstance();
-        Calendar date2 = Calendar.getInstance();
 
-        int month1 = 0;
-        int day1 = 0;
-        int year1 = 0;
-        int month2 = 0;
-        int day2 = 0;
-        int year2 = 0;
-        int remaining = 0;
-        int dayOfYear2 = 0;
-        int leapYears = 0;
-        int period = 0;
-        int totalDays = 0;
+        System.out.println("You are going to enter 2 dates");
+        System.out.println("Enter month (number)");
+        int month1 = keyboard.nextInt();
+        System.out.println("Enter day:");
+        int day1 = keyboard.nextInt();
+        System.out.println("Enter year:");
+        int year1 = keyboard.nextInt();
+        System.out.println("Enter month (number)");
+        int month2 = keyboard.nextInt();
+        System.out.println("Enter day:");
+        int day2 = keyboard.nextInt();
+        System.out.println("Enter year:");
+        int year2 = keyboard.nextInt();
 
-        System.out.println(You are going to enter 2 dates);
-        System.out.println(Enter month (number));
-        month1 = keyboard.nextInt();
-        System.out.println(Enter day);
-        day1 = keyboard.nextInt();
-        System.out.println(Enter year);
-        year1 = keyboard.nextInt();
-        System.out.println(Enter month (number));
-        month2 = keyboard.nextInt();
-        System.out.println(Enter day);
-        day2 = keyboard.nextInt();
-        System.out.println(Enter year);
-        year2 = keyboard.nextInt();
+        //setting the dates
+        LocalDate Date1 = LocalDate.of(year1, month1, day1);
+        LocalDate Date2 = LocalDate.of(year2, month2, day2);
 
-        date1.set(Calendar.MONTH, month1-1);
-        date1.set(Calendar.DAY_OF_MONTH, day1);
-        date1.set(Calendar.YEAR, year1);
-        date2.set(Calendar.MONTH, month2-1);
-        date2.set(Calendar.DAY_OF_MONTH, day2);
-        date2.set(Calendar.YEAR, year2);
+        //using the period class to find the difference between the two dates
+        Period p = Period.between(Date1, Date2);
 
-        HOW TO FIND THE DAYS BETWEEN
-        STEP ONE find the remaining days in first date
+        //placing the days/years/month differences in int variables
+        int days = p.getDays();
+        int months = p.getMonths();
+        int years = p.getYears();
 
-        if (date1.get(Calendar.YEAR) % 4 == 0) {
-            remaining = remaining + (366 - date1.get(Calendar.DAY_OF_YEAR));
+        //created if statements just in case the first date is smaller than the 2nd, this is used to prevent negative numbers
+        if(p.getDays() < 0) {
+            days = p.getDays() * -1;
         }
-        else {
-            remaining = remaining + (365 - date1.get(Calendar.DAY_OF_YEAR));
+        else if (p.getMonths() < 0) {
+            months = p.getMonths() * -1;
+        }
+        else if (p.getYears() < 0) {
+            years = p.getYears() * -1;
         }
 
-        STEP TWO FIND THE DAY OF THE YEAR OF DATE TWO
-        dayOfYear2 = date2.get(Calendar.DAY_OF_YEAR);
-
-        STEP THREE Find the number of leap years!
-
-        for(int i = date1.get(Calendar.YEAR); i  date2.get(Calendar.YEAR); i++) {
-            if (i % 4 == 0) {
-                leapYears++;
-            }
-        }
-         STEP FOUR Find the difference between the years
-        period = date2.get(Calendar.YEAR) - date1.get(Calendar.YEAR) - 1;
-        period = period  365;  if there's no leap years
-        period = period + leapYears;  if there's leap years
-
-        totalDays = remaining + period + dayOfYear2;
-        if (totalDays  0) {
-            totalDays = totalDays  (-1);
-        }
-
-        System.out.println(The total number of days between  + date1.getTime()
-                +  and  + date2.getTime() +  is  + totalDays +  days.);
+        //printing out the difference to the console
+        System.out.println("The difference between your two dates is " + months + " months, " +
+                days + " days, and " + years + " years.");
     }
 }
